@@ -1,0 +1,26 @@
+-- Variable
+local player = game.Players.LocalPlayer
+
+-- Grab Worth3 & Teleport back
+function grab()
+	for i,v in pairs(workspace.CollectionZones.Worth3:GetChildren()) do
+		if v:FindFirstChild("Worth3") then
+			local old = player.Character.HumanoidRootPart.CFrame
+			repeat
+				player.Character.HumanoidRootPart.CFrame = v.Worth3.CFrame
+				wait()
+				player.Remote:FireServer("PickWorth3", v)
+			until v == nil or v.Parent == nil
+			player.Character.HumanoidRootPart.CFrame = old
+			return
+		end
+	end
+	game.StarterGui:SetCore("SendNotification", {Title="No Worth3 found";Duration=5;Text="";})
+	wait(3)
+end
+
+-- Bad loop
+repeat
+	grab()
+	wait()
+until not _G.Loop
